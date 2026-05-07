@@ -10,10 +10,7 @@
 
     <depends>com.intellij.modules.platform</depends>
 
-    <resource-bundle>messages.MyBundle</resource-bundle>
-
     <extensions defaultExtensionNs="com.intellij">
-        <toolWindow factoryClass="com.github.nadiajetbrains.ijpl234280.toolWindow.MyToolWindowFactory" id="MyToolWindow"/>
-        <postStartupActivity implementation="com.github.nadiajetbrains.ijpl234280.startup.MyProjectActivity" />
+        <toolWindow factoryClass="com.github.nadiajetbrains.ijpl234280.toolWindow.MyToolWindowFactory" id="MyToolWindow" anchor="right"/>
     </extensions>
 </idea-plugin>

@@ -1,17 +1,14 @@
 package com.github.nadiajetbrains.ijpl234280.toolWindow
 
-import com.intellij.openapi.components.service
 import com.intellij.openapi.diagnostic.thisLogger
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.wm.ToolWindow
 import com.intellij.openapi.wm.ToolWindowFactory
-import com.intellij.ui.components.JBLabel
-import com.intellij.ui.components.JBPanel
 import com.intellij.ui.content.ContentFactory
-import com.github.nadiajetbrains.ijpl234280.MyBundle
-import com.github.nadiajetbrains.ijpl234280.services.MyProjectService
-import javax.swing.JButton
-
+import com.intellij.ui.jcef.JBCefBrowser
+import com.intellij.ui.components.JBPanel
+import java.awt.BorderLayout
+import javax.swing.JPanel
 
 class MyToolWindowFactory : ToolWindowFactory {
 
@@ -29,17 +26,52 @@ class MyToolWindowFactory : ToolWindowFactory {
 
     class MyToolWindow(toolWindow: ToolWindow) {
 
-        private val service = toolWindow.project.service<MyProjectService>()
+        // Create a JCEF browser
+        private val browser = JBCefBrowser()
 
-        fun getContent() = JBPanel<JBPanel<*>>().apply {
-            val label = JBLabel(MyBundle["randomLabel", "?"])
+        init {
+            // Load HTML content with markdown-style list and hyperlinks to Google
+            val htmlContent = """
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <style>
+                        body {
+                            font-family: Arial, sans-serif;
+                            margin: 20px;
+                        }
+                        ul {
+                            list-style-type: disc;
+                            padding-left: 20px;
+                        }
+                        li {
+                            margin-bottom: 10px;
+                        }
+                        a {
+                            color: #4285F4;
+                            text-decoration: none;
+                        }
+                        a:hover {
+                            text-decoration: underline;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <ul>
+                        <li><a href="https://www.google.com">List item 1</a></li>
+                        <li><a href="https://www.google.com">List item 2</a></li>
+                    </ul>
+                </body>
+                </html>
+            """.trimIndent()
 
-            add(label)
-            add(JButton(MyBundle["shuffle"]).apply {
-                addActionListener {
-                    label.text = MyBundle["randomLabel", service.getRandomNumber()]
-                }
-            })
+            browser.loadHTML(htmlContent)
+        }
+
+        fun getContent(): JPanel {
+            val panel = JBPanel<JBPanel<*>>(BorderLayout())
+            panel.add(browser.component, BorderLayout.CENTER)
+            return panel
         }
     }
 }
