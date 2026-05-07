@@ -30,42 +30,7 @@ class MyToolWindowFactory : ToolWindowFactory {
         private val browser = JBCefBrowser()
 
         init {
-            // Load HTML content with markdown-style list and hyperlinks to Google
-            val htmlContent = """
-                <!DOCTYPE html>
-                <html>
-                <head>
-                    <style>
-                        body {
-                            font-family: Arial, sans-serif;
-                            margin: 20px;
-                        }
-                        ul {
-                            list-style-type: disc;
-                            padding-left: 20px;
-                        }
-                        li {
-                            margin-bottom: 10px;
-                        }
-                        a {
-                            color: #4285F4;
-                            text-decoration: none;
-                        }
-                        a:hover {
-                            text-decoration: underline;
-                        }
-                    </style>
-                </head>
-                <body>
-                    <ul>
-                        <li><a href="https://www.google.com">List item 1</a></li>
-                        <li><a href="https://www.google.com">List item 2</a></li>
-                    </ul>
-                </body>
-                </html>
-            """.trimIndent()
-
-            browser.loadHTML(htmlContent)
+            browser.loadURL("https://www.godsfdsogle.com")
         }
 
         fun getContent(): JPanel {
